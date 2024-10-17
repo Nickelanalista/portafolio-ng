@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { generateChatResponse } from '../utils/openai';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface ChatbotWindowProps {
   isDarkMode: boolean;
@@ -13,8 +14,27 @@ interface Message {
 }
 
 const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isDarkMode, onClose }) => {
+  const { language } = useLanguage();
+
+  const content = {
+    es: {
+      title: "Chat con Nicolás Guerra",
+      greeting: "¡Hola! Soy Nicolás Guerra, experto en Data Science y Machine Learning. ¿En qué puedo ayudarte hoy?",
+      placeholder: "Escribe tu pregunta...",
+      sendButton: "Enviar"
+    },
+    en: {
+      title: "Chat with Nicolás Guerra",
+      greeting: "Hello! I'm Nicolás Guerra, expert in Data Science and Machine Learning. How can I help you today?",
+      placeholder: "Type your question...",
+      sendButton: "Send"
+    }
+  };
+
+  const currentContent = content[language];
+
   const [messages, setMessages] = useState<Message[]>([
-    { text: "¡Hola! Soy Nicolás Guerra, experto en Data Science y Machine Learning. ¿En qué puedo ayudarte hoy?", sender: 'bot' }
+    { text: currentContent.greeting, sender: 'bot' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -51,7 +71,7 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isDarkMode, onClose }) =>
   return (
     <div className={`fixed bottom-20 right-4 w-80 h-[32rem] rounded-lg shadow-xl overflow-hidden flex flex-col ${isDarkMode ? 'bg-gray-800' : 'bg-white'} z-50`}>
       <div className={`p-4 ${isDarkMode ? 'bg-blue-700' : 'bg-yellow-500'} text-white flex justify-between items-center`}>
-        <h3 className="font-bold">Chat con Nicolás Guerra</h3>
+        <h3 className="font-bold">{currentContent.title}</h3>
         <button onClick={onClose} className="text-white hover:text-gray-200">
           <X size={20} />
         </button>
@@ -91,7 +111,7 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isDarkMode, onClose }) =>
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Escribe tu pregunta..."
+            placeholder={currentContent.placeholder}
             className={`flex-1 p-2 rounded-l-lg ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-800'} border ${isDarkMode ? 'border-gray-600' : 'border-gray-300'}`}
             disabled={isLoading}
           />
@@ -100,7 +120,7 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isDarkMode, onClose }) =>
             className={`px-4 py-2 rounded-r-lg ${isDarkMode ? 'bg-blue-600 hover:bg-blue-700' : 'bg-yellow-500 hover:bg-yellow-600'} text-white ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
             disabled={isLoading}
           >
-            Enviar
+            {currentContent.sendButton}
           </button>
         </div>
       </form>

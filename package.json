@@ -1,5 +1,5 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "nicog-portafolio",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -23,7 +23,10 @@
     "react-particles": "^2.9.3",
     "react-router-dom": "^6.27.0",
     "swiper": "^11.1.14",
-    "tsparticles": "^2.9.3"
+    "tsparticles": "^2.9.3",
+    "react-chatbot-kit": "^2.1.2",
+    "@tensorflow/tfjs": "^4.2.0",
+    "natural": "^6.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon, Globe } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useLocation } from 'react-router-dom';
@@ -42,27 +42,22 @@ const Header: React.FC = () => {
         )}
         <div className={`flex items-center ${!isScrolled && location.pathname === '/' ? 'ml-auto' : ''}`}>
           <nav className="hidden md:flex items-center space-x-6">
-            {menuItems[language].map((item) => {
-              const href = item === 'Inicio' || item === 'Home' 
-                ? '#' 
-                : `#${item.toLowerCase().replace(' ', '-').normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`;
-              return (
-                <a 
-                  key={item} 
-                  href={href}
-                  className="text-yellow-400 hover:text-yellow-300 dark:text-cyan-400 dark:hover:text-cyan-300 transition-colors"
-                >
-                  {item}
-                </a>
-              );
-            })}
+            {menuItems[language].map((item) => (
+              <a 
+                key={item} 
+                href={item === 'Inicio' || item === 'Home' ? '#' : `#${item.toLowerCase().replace(' ', '-')}`} 
+                className="text-yellow-400 hover:text-yellow-300 dark:text-cyan-400 dark:hover:text-cyan-300 transition-colors"
+              >
+                {item}
+              </a>
+            ))}
           </nav>
           <div className="flex items-center ml-6">
             <button onClick={toggleTheme} className="p-2 rounded-full bg-yellow-400 dark:bg-cyan-400 text-purple-900 dark:text-gray-900 mr-2">
               {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
             </button>
             <button onClick={toggleLanguage} className="p-2 rounded-full bg-yellow-400 dark:bg-cyan-400 text-purple-900 dark:text-gray-900">
-              {language === 'es' ? 'US' : 'ES'}
+              {language === 'es' ? 'EN' : 'ES'}
             </button>
           </div>
           <div className="md:hidden ml-4">

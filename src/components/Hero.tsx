@@ -170,9 +170,9 @@ const Hero: React.FC = () => {
         </div>
         <div className="flex flex-wrap justify-center gap-4 mb-8">
           {techBadges.map((badge, index) => (
-            <span key={index} className="px-3 py-1 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-full text-sm text-white flex items-center">
+            <span key={index} className="px-3 py-1 bg-black bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-full text-sm flex items-center">
               <img src={badge.icon} alt={badge.name} className="w-5 h-5 mr-2" style={{ filter: 'brightness(0) invert(1)' }} />
-              {badge.name}
+              <span className="text-white">{badge.name}</span>
             </span>
           ))}
         </div>
