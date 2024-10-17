@@ -45,16 +45,15 @@ const Hero: React.FC = () => {
   ];
 
   const techBadges = [
-    { name: 'Python', icon: Code, color: '#3776AB' },
-    { name: 'R', icon: BarChart2, color: '#276DC3' },
-    { name: 'Pandas', icon: Database, color: '#150458' },
-    { name: 'NumPy', icon: Brain, color: '#013243' },
-    { name: 'Matplotlib', icon: BarChart2, color: '#11557c' },
-    { name: 'Scikit-learn', icon: Brain, color: '#F7931E' },
-    { name: 'TensorFlow', icon: Cpu, color: '#FF6F00' },
-    { name: 'PyTorch', icon: Brain, color: '#EE4C2C' },
-    { name: 'Plotly', icon: BarChart2, color: '#3F4F75' },
-    { name: 'Keras', icon: Brain, color: '#D00000' }
+    { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', color: '#3776AB' },
+    { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-plain.svg', color: '#F7DF1E' },
+    { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg', color: '#61DAFB' },
+    { name: 'R', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg', color: '#276DC3' },
+    { name: 'SQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg', color: '#4479A1' },
+    { name: 'Power BI', icon: 'https://raw.githubusercontent.com/microsoft/PowerBI-Icons/main/SVG/Power-BI.svg', color: '#F2C811' },
+    { name: 'Tableau', icon: 'https://cdn.worldvectorlogo.com/logos/tableau-software.svg', color: '#E97627' },
+    { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg', color: '#F05032' },
+    { name: 'Docker', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg', color: '#2496ED' }
   ];
 
   // URLs de los logos
@@ -146,7 +145,7 @@ const Hero: React.FC = () => {
               }}
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-blue-900 to-purple-900 opacity-80 z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-blue-900 to-indigo-900 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900 opacity-80 z-10"></div>
         </>
       )}
       <div className="relative z-20 text-center text-white px-4">
@@ -162,8 +161,8 @@ const Hero: React.FC = () => {
         <div className="flex flex-wrap justify-center gap-8 mb-8">
           {techIcons.map((tech, index) => (
             <div key={index} className="flex flex-col items-center">
-              <div className="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-full p-3">
-                <tech.icon size={36} className={`${theme === 'light' ? 'text-yellow-400' : 'text-blue-400'}`} />
+              <div className={`bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-full p-3 ${theme === 'light' ? 'text-yellow-400' : 'text-blue-400'}`}>
+                <tech.icon size={36} />
               </div>
               <span className="mt-2 text-white">{tech.name}</span>
             </div>
@@ -172,7 +171,7 @@ const Hero: React.FC = () => {
         <div className="flex flex-wrap justify-center gap-4 mb-8">
           {techBadges.map((badge, index) => (
             <span key={index} className="px-3 py-1 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-full text-sm text-white flex items-center">
-              <badge.icon size={16} className="mr-2" style={{ color: badge.color }} />
+              <img src={badge.icon} alt={badge.name} className="w-5 h-5 mr-2" style={{ filter: 'brightness(0) invert(1)' }} />
               {badge.name}
             </span>
           ))}
@@ -188,6 +187,7 @@ const Hero: React.FC = () => {
           {currentContent.contact}
         </a>
       </div>
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-purple-900 to-transparent dark:from-gray-900 opacity-50 z-20"></div>
     </section>
   );
 };

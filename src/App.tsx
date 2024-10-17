@@ -13,6 +13,8 @@ import Footer from './components/Footer';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import AnimatedSection from './components/AnimatedSection';
+import { useEffect } from 'react';
+import emailjs from '@emailjs/browser';
 
 function AppContent() {
   const { theme } = useTheme();
@@ -31,19 +33,19 @@ function AppContent() {
               <>
                 <Hero />
                 <AnimatedSection><About /></AnimatedSection>
+                <AnimatedSection><Education /></AnimatedSection>
                 <AnimatedSection><Experience /></AnimatedSection>
                 <AnimatedSection><Skills /></AnimatedSection>
                 <AnimatedSection><Projects /></AnimatedSection>
                 <AnimatedSection><Testimonials /></AnimatedSection>
-                <AnimatedSection><Education /></AnimatedSection>
                 <AnimatedSection><Contact /></AnimatedSection>
               </>
             } />
             <Route path="/about" element={<About />} />
+            <Route path="/education" element={<Education />} />
             <Route path="/experience" element={<Experience />} />
             <Route path="/skills" element={<Skills />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/education" element={<Education />} />
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
@@ -55,6 +57,10 @@ function AppContent() {
 }
 
 function App() {
+  useEffect(() => {
+    emailjs.init('ilWnr_DiS6_IqzgpZ');
+  }, []);
+
   return (
     <ThemeProvider>
       <LanguageProvider>

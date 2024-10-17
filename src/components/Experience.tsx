@@ -103,7 +103,7 @@ const Experience: React.FC = () => {
                 <div className="w-6 h-6 bg-yellow-400 dark:bg-cyan-400 rounded-full border-4 border-purple-900 dark:border-gray-900 z-20"></div>
               </div>
               <div className={`w-5/12 ${index % 2 === 0 ? 'pl-8' : 'pr-8'}`}>
-                <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-lg mx-auto">
+                <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-lg mx-auto border-4 border-yellow-400 dark:border-cyan-400">
                   <img className="h-16 w-auto object-contain" src={exp.logo} alt={exp.company} />
                 </div>
               </div>

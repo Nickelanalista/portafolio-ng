@@ -107,7 +107,7 @@ const Projects: React.FC = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {currentProjectCategories.map((category, categoryIndex) => (
-            <div key={categoryIndex} className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl shadow-xl p-6 transform transition duration-300 hover:scale-105">
+            <div key={categoryIndex} className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl shadow-xl p-6">
               <h3 className="text-2xl font-semibold mb-4 text-center text-white flex items-center justify-center">
                 <category.icon className="mr-2 text-yellow-400 dark:text-cyan-400" size={32} />
                 {category.category}
@@ -115,7 +115,10 @@ const Projects: React.FC = () => {
               <p className="text-center text-white mb-6">{category.description}</p>
               <div className="space-y-4">
                 {category.projects.map((project, projectIndex) => (
-                  <div key={projectIndex} className="bg-white bg-opacity-5 rounded-lg p-4">
+                  <div 
+                    key={projectIndex} 
+                    className="bg-white bg-opacity-5 rounded-lg p-4 transform transition duration-300 hover:scale-105 hover:bg-opacity-10"
+                  >
                     <div className="flex items-center mb-2">
                       <project.icon className="text-yellow-400 dark:text-cyan-400 mr-2" size={20} />
                       <h4 className="text-lg font-medium text-yellow-300 dark:text-cyan-300">{project.title}</h4>

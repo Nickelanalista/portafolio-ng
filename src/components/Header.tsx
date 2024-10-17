@@ -53,7 +53,7 @@ const Header: React.FC = () => {
               {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
             </button>
             <button onClick={toggleLanguage} className="p-2 rounded-full bg-yellow-400 dark:bg-cyan-400 text-purple-900 dark:text-gray-900">
-              {language === 'es' ? '🇪🇸' : '🇺🇸'}
+              {language === 'es' ? 'US' : 'ES'}
             </button>
           </div>
           <div className="md:hidden ml-4">

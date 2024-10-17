@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import emailjs from '@emailjs/browser';
 
 const ContactForm: React.FC = () => {
   const [name, setName] = useState('');
@@ -7,36 +8,23 @@ const ContactForm: React.FC = () => {
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState('');
   const { language } = useLanguage();
+  const form = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus(language === 'es' ? 'Enviando...' : 'Sending...');
 
-    const details = { name, email, message };
-
-    try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(details),
-      });
-
-      const result = await response.json();
-      
-      if (response.ok) {
+    emailjs.sendForm('default_service', 'template_872c15b', form.current!, process.env.REACT_APP_EMAILJS_PUBLIC_KEY || '')
+      .then((result) => {
+        console.log(result.text);
         setStatus(language === 'es' ? '¡Mensaje enviado con éxito!' : 'Message sent successfully!');
         setName('');
         setEmail('');
         setMessage('');
-      } else {
-        setStatus(language === 'es' ? `Error: ${result.message}` : `Error: ${result.message}`);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setStatus(language === 'es' ? 'Error al enviar el mensaje' : 'Error sending message');
-    }
+      }, (error) => {
+        console.log(error.text);
+        setStatus(language === 'es' ? 'Error al enviar el mensaje' : 'Error sending message');
+      });
   };
 
   const content = {
@@ -67,12 +55,13 @@ const ContactForm: React.FC = () => {
   const currentContent = content[language];
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form ref={form} onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="name" className="block text-white mb-2">{currentContent.name}</label>
+        <label htmlFor="from_name" className="block text-white mb-2">{currentContent.name}</label>
         <input
           type="text"
-          id="name"
+          name="from_name"
+          id="from_name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="w-full px-3 py-2 bg-white bg-opacity-20 rounded-md text-white placeholder-gray-400"
@@ -81,10 +70,11 @@ const ContactForm: React.FC = () => {
         />
       </div>
       <div>
-        <label htmlFor="email" className="block text-white mb-2">{currentContent.email}</label>
+        <label htmlFor="reply_to" className="block text-white mb-2">{currentContent.email}</label>
         <input
           type="email"
-          id="email"
+          name="reply_to"
+          id="reply_to"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full px-3 py-2 bg-white bg-opacity-20 rounded-md text-white placeholder-gray-400"
@@ -95,6 +85,7 @@ const ContactForm: React.FC = () => {
       <div>
         <label htmlFor="message" className="block text-white mb-2">{currentContent.message}</label>
         <textarea
+          name="message"
           id="message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
