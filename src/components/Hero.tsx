@@ -61,7 +61,7 @@ const Hero: React.FC = () => {
   const logoDark = "https://firebasestorage.googleapis.com/v0/b/analytics-53019.appspot.com/o/logo_ng_blue.png?alt=media&token=ec522553-0dec-45cb-abe7-962658833e92";
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+    <section id="inicio" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
       {isHomePage && (
         <>
           <div className="absolute inset-0 z-0">

@@ -20,8 +20,8 @@ const Header: React.FC = () => {
   }, []);
 
   const menuItems = {
-    es: ['Sobre mí', 'Experiencia', 'Educación', 'Proyectos', 'Contacto'],
-    en: ['About', 'Experience', 'Education', 'Projects', 'Contact']
+    es: ['Inicio', 'Sobre mí', 'Educación', 'Experiencia', 'Proyectos', 'Eventos', 'Contacto'],
+    en: ['Home', 'About', 'Education', 'Experience', 'Projects', 'Events', 'Contact']
   };
 
   // URLs de los logos
@@ -42,11 +42,20 @@ const Header: React.FC = () => {
         )}
         <div className={`flex items-center ${!isScrolled && location.pathname === '/' ? 'ml-auto' : ''}`}>
           <nav className="hidden md:flex items-center space-x-6">
-            {menuItems[language].map((item) => (
-              <a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className="text-yellow-400 hover:text-yellow-300 dark:text-cyan-400 dark:hover:text-cyan-300 transition-colors">
-                {item}
-              </a>
-            ))}
+            {menuItems[language].map((item) => {
+              const href = item === 'Inicio' || item === 'Home' 
+                ? '#' 
+                : `#${item.toLowerCase().replace(' ', '-').normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`;
+              return (
+                <a 
+                  key={item} 
+                  href={href}
+                  className="text-yellow-400 hover:text-yellow-300 dark:text-cyan-400 dark:hover:text-cyan-300 transition-colors"
+                >
+                  {item}
+                </a>
+              );
+            })}
           </nav>
           <div className="flex items-center ml-6">
             <button onClick={toggleTheme} className="p-2 rounded-full bg-yellow-400 dark:bg-cyan-400 text-purple-900 dark:text-gray-900 mr-2">

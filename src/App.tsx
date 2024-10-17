@@ -15,6 +15,8 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import AnimatedSection from './components/AnimatedSection';
 import { useEffect } from 'react';
 import emailjs from '@emailjs/browser';
+import ChatbotButton from './components/ChatbotButton';
+import Events from './components/Events';
 
 function AppContent() {
   const { theme } = useTheme();
@@ -38,6 +40,7 @@ function AppContent() {
                 <AnimatedSection><Skills /></AnimatedSection>
                 <AnimatedSection><Projects /></AnimatedSection>
                 <AnimatedSection><Testimonials /></AnimatedSection>
+                <AnimatedSection><Events /></AnimatedSection>
                 <AnimatedSection><Contact /></AnimatedSection>
               </>
             } />
@@ -47,10 +50,13 @@ function AppContent() {
             <Route path="/skills" element={<Skills />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/events" element={<Events />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
         <Footer />
+        <ChatbotButton isDarkMode={theme === 'dark'} />
       </div>
     </Router>
   );
