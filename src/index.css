@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Animaciones personalizadas */
+@keyframes cosmic-name {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-cosmic-name {
+  animation: cosmic-name 15s ease infinite;
+  background: linear-gradient(270deg, #ffd700, #ffa500, #ff8c00, #ff7f50);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.animate-cosmic-name-dark {
+  animation: cosmic-name 15s ease infinite;
+  background: linear-gradient(270deg, #00ffff, #00bfff, #1e90ff, #4169e1);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Asegúrate de que otros estilos no interfieran */
+@layer base {
+  body {
+    @apply text-white transition-colors duration-300;
+  }
+}
+
+/* Estilos de componentes específicos */
+@layer components {
+  .tech-gradient {
+    @apply bg-gradient-to-r from-yellow-400 to-amber-500;
+  }
+  .dark .tech-gradient {
+    @apply bg-gradient-to-r from-cyan-400 to-blue-500;
+  }
+}
+
+/* Gradient backgrounds for light and dark themes */
+body {
+  @apply min-h-screen transition-colors duration-300;
+  background-image: linear-gradient(to bottom, #4a0e8f, #3730a3, #1e40af);
+  background-attachment: fixed;
+}
+
+body.dark {
+  background-image: linear-gradient(to bottom, #111827, #1e3a8a, #312e81);
+  background-attachment: fixed;
+}
+
+/* Remove any potential extra spacing between components */
+section {
+  @apply my-0 py-8;
+}
+
+/* Ensure consistent spacing for all main sections */
+main > section {
+  @apply mb-0;
+}
+
+/* Specific adjustments for Projects and Testimonials sections */
+#projects,
+#testimonials {
+  @apply pt-0 pb-8;
+}
+
+/* Ensure dark theme is applied consistently */
+.dark {
+  @apply bg-gray-900 text-white;
+}
+
+.dark * {
+  @apply border-gray-700;
+}
