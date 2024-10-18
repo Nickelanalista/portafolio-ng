@@ -145,7 +145,7 @@ const Hero: React.FC = () => {
               }}
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-blue-900 to-indigo-900 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900 opacity-80 z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-blue-900 to-purple-900 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 opacity-80 z-10"></div>
         </>
       )}
       <div className="relative z-20 text-center text-white px-4">

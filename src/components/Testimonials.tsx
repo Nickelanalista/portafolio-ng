@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
+import { useInView } from 'react-intersection-observer';
 
 const Testimonials: React.FC = () => {
   const { language } = useLanguage();
@@ -78,29 +79,46 @@ const Testimonials: React.FC = () => {
           ? 'bg-gradient-to-b from-gray-900 via-blue-900 to-indigo-900' 
           : 'bg-gradient-to-b from-purple-900 via-blue-900 to-purple-900'
       } opacity-80 z-10`}></div>
-      <div className="container   mx-auto px-4 relative z-20">
+      <div className="container mx-auto px-4 relative z-20">
         <h2 className={`text-4xl font-bold mb-12 text-center text-yellow-400 dark:text-cyan-400 sticky top-0 bg-opacity-80 backdrop-filter backdrop-blur-lg z-30 py-4`}>
           {language === 'es' ? 'Referencias Laborales' : 'Professional References'}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {currentTestimonials.map((testimonial, index) => (
-            <div key={index} className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl shadow-xl p-6 transform transition duration-300 hover:scale-105">
-              <p className="text-white mb-4">{testimonial.content}</p>
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <img className="h-12 w-12 rounded-full object-cover" src={testimonial.image} alt={testimonial.name} />
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-yellow-400 dark:text-cyan-400">{testimonial.name}</p>
-                  <p className="text-sm text-white">{testimonial.position}</p>
-                  <p className="text-sm text-yellow-300 dark:text-cyan-300">{testimonial.company}</p>
-                </div>
-              </div>
-            </div>
+            <TestimonialItem key={index} testimonial={testimonial} delay={index * 200} />
           ))}
         </div>
       </div>
     </section>
+  );
+};
+
+const TestimonialItem: React.FC<{ testimonial: any; delay: number }> = ({ testimonial, delay }) => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <div 
+      ref={ref}
+      className={`bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl shadow-xl p-6 transform transition duration-1000 ${
+        inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+      }`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      <p className="text-white mb-4">{testimonial.content}</p>
+      <div className="flex items-center">
+        <div className="flex-shrink-0">
+          <img className="h-12 w-12 rounded-full object-cover" src={testimonial.image} alt={testimonial.name} />
+        </div>
+        <div className="ml-3">
+          <p className="text-sm font-medium text-yellow-400 dark:text-cyan-400">{testimonial.name}</p>
+          <p className="text-sm text-white">{testimonial.position}</p>
+          <p className="text-sm text-yellow-300 dark:text-cyan-300">{testimonial.company}</p>
+        </div>
+      </div>
+    </div>
   );
 };
 

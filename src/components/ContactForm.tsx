@@ -14,7 +14,12 @@ const ContactForm: React.FC = () => {
     e.preventDefault();
     setStatus(language === 'es' ? 'Enviando...' : 'Sending...');
 
-    emailjs.sendForm('default_service', 'template_872c15b', form.current!, process.env.REACT_APP_EMAILJS_PUBLIC_KEY || '')
+    emailjs.sendForm(
+      'default_service', 
+      'template_872c15b', 
+      form.current!, 
+      'ilWnr_DiS6_IqzgpZ'
+    )
       .then((result) => {
         console.log(result.text);
         setStatus(language === 'es' ? '¡Mensaje enviado con éxito!' : 'Message sent successfully!');
@@ -60,48 +65,44 @@ const ContactForm: React.FC = () => {
         <label htmlFor="from_name" className="block text-white mb-2">{currentContent.name}</label>
         <input
           type="text"
-          name="from_name"
           id="from_name"
+          name="from_name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full px-3 py-2 bg-white bg-opacity-20 rounded-md text-white placeholder-gray-400"
-          placeholder={currentContent.placeholder.name}
           required
+          className="w-full p-2 rounded bg-white bg-opacity-20 text-white placeholder-gray-300"
+          placeholder={currentContent.placeholder.name}
         />
       </div>
       <div>
-        <label htmlFor="reply_to" className="block text-white mb-2">{currentContent.email}</label>
+        <label htmlFor="from_email" className="block text-white mb-2">{currentContent.email}</label>
         <input
           type="email"
-          name="reply_to"
-          id="reply_to"
+          id="from_email"
+          name="from_email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-3 py-2 bg-white bg-opacity-20 rounded-md text-white placeholder-gray-400"
-          placeholder={currentContent.placeholder.email}
           required
+          className="w-full p-2 rounded bg-white bg-opacity-20 text-white placeholder-gray-300"
+          placeholder={currentContent.placeholder.email}
         />
       </div>
       <div>
         <label htmlFor="message" className="block text-white mb-2">{currentContent.message}</label>
         <textarea
-          name="message"
           id="message"
+          name="message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="w-full px-3 py-2 bg-white bg-opacity-20 rounded-md text-white placeholder-gray-400"
-          rows={4}
-          placeholder={currentContent.placeholder.message}
           required
+          className="w-full p-2 rounded bg-white bg-opacity-20 text-white placeholder-gray-300 h-32"
+          placeholder={currentContent.placeholder.message}
         ></textarea>
       </div>
-      <button
-        type="submit"
-        className="tech-gradient text-gray-900 font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105 shadow-lg flex items-center justify-center"
-      >
+      <button type="submit" className="w-full bg-yellow-400 dark:bg-cyan-400 text-purple-900 dark:text-gray-900 font-bold py-2 px-4 rounded hover:bg-yellow-300 dark:hover:bg-cyan-300 transition-colors">
         {currentContent.send}
       </button>
-      {status && <p className="mt-4 text-center text-yellow-400 dark:text-cyan-400">{status}</p>}
+      {status && <p className="text-white mt-4">{status}</p>}
     </form>
   );
 };

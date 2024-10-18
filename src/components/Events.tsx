@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
+import { useInView } from 'react-intersection-observer';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
@@ -10,6 +11,10 @@ import 'swiper/css/pagination';
 const Events: React.FC = () => {
   const { language } = useLanguage();
   const { theme } = useTheme();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
 
   const content = {
     es: {
@@ -37,7 +42,12 @@ const Events: React.FC = () => {
         <h2 className="text-4xl font-bold mb-12 text-center text-yellow-400 dark:text-cyan-400 sticky top-0 bg-opacity-80 backdrop-filter backdrop-blur-lg z-30 py-5">
           {currentContent.title}
         </h2>
-        <div className="flex flex-col md:flex-row gap-10 justify-center">
+        <div 
+          ref={ref}
+          className={`flex flex-col md:flex-row gap-10 justify-center transition-all duration-1000 ${
+            inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+          }`}
+        >
           <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl shadow-xl p-8 md:w-1/2">
             <p className="text-lg mb-6 text-white leading-relaxed">
               {currentContent.description}

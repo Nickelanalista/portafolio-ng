@@ -2,6 +2,7 @@ import React from 'react';
 import { Brain, TrendingUp, BarChart2, Database, Code, PieChart, MessageSquare, Image, FileText, Users, DollarSign, Map, ShieldCheck, ShoppingBag, Target, Zap, Bot, Globe } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
+import { useInView } from 'react-intersection-observer';
 
 const Projects: React.FC = () => {
   const { language } = useLanguage();
@@ -107,31 +108,61 @@ const Projects: React.FC = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {currentProjectCategories.map((category, categoryIndex) => (
-            <div key={categoryIndex} className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl shadow-xl p-6">
-              <h3 className="text-2xl font-semibold mb-4 text-center text-white flex items-center justify-center">
-                <category.icon className="mr-2 text-yellow-400 dark:text-cyan-400" size={32} />
-                {category.category}
-              </h3>
-              <p className="text-center text-white mb-6">{category.description}</p>
-              <div className="space-y-4">
-                {category.projects.map((project, projectIndex) => (
-                  <div 
-                    key={projectIndex} 
-                    className="bg-white bg-opacity-5 rounded-lg p-4 transform transition duration-300 hover:scale-105 hover:bg-opacity-10"
-                  >
-                    <div className="flex items-center mb-2">
-                      <project.icon className="text-yellow-400 dark:text-cyan-400 mr-2" size={20} />
-                      <h4 className="text-lg font-medium text-yellow-300 dark:text-cyan-300">{project.title}</h4>
-                    </div>
-                    <p className="text-white text-sm leading-relaxed">{project.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <ProjectCategory key={categoryIndex} category={category} />
           ))}
         </div>
       </div>
     </section>
+  );
+};
+
+const ProjectCategory: React.FC<{ category: any }> = ({ category }) => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <div 
+      ref={ref}
+      className={`bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl shadow-xl p-6 transition-all duration-1000 ${
+        inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+      }`}
+    >
+      <h3 className="text-2xl font-semibold mb-4 text-center text-white flex items-center justify-center">
+        <category.icon className="mr-2 text-yellow-400 dark:text-cyan-400" size={32} />
+        {category.category}
+      </h3>
+      <p className="text-center text-white mb-6">{category.description}</p>
+      <div className="space-y-4">
+        {category.projects.map((project, projectIndex) => (
+          <ProjectItem key={projectIndex} project={project} delay={projectIndex * 100} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const ProjectItem: React.FC<{ project: any; delay: number }> = ({ project, delay }) => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <div 
+      ref={ref}
+      className={`bg-white bg-opacity-5 rounded-lg p-4 transform transition duration-500 hover:scale-105 hover:bg-opacity-10 ${
+        inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      }`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      <div className="flex items-center mb-2">
+        <project.icon className="text-yellow-400 dark:text-cyan-400 mr-2" size={20} />
+        <h4 className="text-lg font-medium text-yellow-300 dark:text-cyan-300">{project.title}</h4>
+      </div>
+      <p className="text-white text-sm leading-relaxed">{project.description}</p>
+    </div>
   );
 };
 

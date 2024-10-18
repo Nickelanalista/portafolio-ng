@@ -2,6 +2,8 @@ import React from 'react';
 import { Brain, TrendingUp, BarChart2, Database, Code, Cpu, Globe, Cloud } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
+import { useInView } from 'react-intersection-observer';
+import { IconType } from 'react-icons';
 
 const Skills: React.FC = () => {
   const { language } = useLanguage();
@@ -109,23 +111,42 @@ const Skills: React.FC = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {currentSkills.map((skill, index) => (
-            <div 
-              key={index} 
-              className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl shadow-xl p-6 transform transition duration-300 hover:scale-105"
-            >
-              <div className="flex items-center mb-4">
-                <div className="bg-gradient-to-br from-yellow-400 to-amber-500 dark:from-cyan-400 dark:to-blue-500 rounded-full p-2 mr-3">
-                  <skill.icon className="text-purple-900 dark:text-gray-900" size={24} />
-                </div>
-                <h3 className="text-xl font-semibold text-white">{skill.name}</h3>
-              </div>
-              <div className="w-full bg-yellow-600 dark:bg-cyan-600 rounded-full h-2.5"></div>
-              <p className="mt-4 text-sm text-white">{skill.description}</p>
-            </div>
+            <SkillItem key={index} skill={skill} />
           ))}
         </div>
       </div>
     </section>
+  );
+};
+
+const SkillItem: React.FC<{
+  skill: {
+    name: string;
+    icon: React.ElementType;
+    description: string;
+  };
+}> = ({ skill }) => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <div 
+      ref={ref}
+      className={`bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl shadow-xl p-6 transform transition duration-1000 ${
+        inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+      }`}
+    >
+      <div className="flex items-center mb-4">
+        <div className="bg-gradient-to-br from-yellow-400 to-amber-500 dark:from-cyan-400 dark:to-blue-500 rounded-full p-2 mr-3">
+          {React.createElement(skill.icon, { className: "text-purple-900 dark:text-gray-900", size: 24 })}
+        </div>
+        <h3 className="text-xl font-semibold text-white">{skill.name}</h3>
+      </div>
+      <div className="w-full bg-yellow-600 dark:bg-cyan-600 rounded-full h-2.5"></div>
+      <p className="mt-4 text-sm text-white">{skill.description}</p>
+    </div>
   );
 };
 

@@ -52,12 +52,12 @@
 /* Gradient backgrounds for light and dark themes */
 body {
   @apply min-h-screen transition-colors duration-300;
-  background-image: linear-gradient(to bottom, #4a0e8f, #3730a3, #1e40af);
+  background-image: linear-gradient(to bottom, #4a0e8f, #3730a3, #1e40af, #4a0e8f);
   background-attachment: fixed;
 }
 
 body.dark {
-  background-image: linear-gradient(to bottom, #111827, #1e3a8a, #312e81);
+  background-image: linear-gradient(to bottom, #111827, #1e3a8a, #312e81, #111827);
   background-attachment: fixed;
 }
 
