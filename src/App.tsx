@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { HelmetProvider, Helmet } from 'react-helmet-async';
+import { HelmetProvider } from 'react-helmet-async';
 import { Home, Calculator, BarChart2, BookOpen, Menu, X } from 'lucide-react';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -70,13 +70,13 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider>
-      <LanguageProvider>
-        <HelmetProvider>
+    <HelmetProvider>
+      <ThemeProvider>
+        <LanguageProvider>
           <AppContent />
-        </HelmetProvider>
-      </LanguageProvider>
-    </ThemeProvider>
+        </LanguageProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }
 
